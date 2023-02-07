@@ -1,0 +1,15 @@
+C:\Projects\patroitconsulting\poc\mssp\LaunchTemplate\LaunchTemplate\bin\Debug\net7.0\LaunchTemplate.exe
+C:\Projects\patroitconsulting\poc\mssp\LaunchTemplate\LaunchTemplate\bin\Debug\net7.0\LaunchTemplate.deps.json
+C:\Projects\patroitconsulting\poc\mssp\LaunchTemplate\LaunchTemplate\bin\Debug\net7.0\LaunchTemplate.runtimeconfig.json
+C:\Projects\patroitconsulting\poc\mssp\LaunchTemplate\LaunchTemplate\bin\Debug\net7.0\LaunchTemplate.dll
+C:\Projects\patroitconsulting\poc\mssp\LaunchTemplate\LaunchTemplate\bin\Debug\net7.0\LaunchTemplate.pdb
+C:\Projects\patroitconsulting\poc\mssp\LaunchTemplate\LaunchTemplate\obj\Debug\net7.0\LaunchTemplate.csproj.AssemblyReference.cache
+C:\Projects\patroitconsulting\poc\mssp\LaunchTemplate\LaunchTemplate\obj\Debug\net7.0\LaunchTemplate.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projects\patroitconsulting\poc\mssp\LaunchTemplate\LaunchTemplate\obj\Debug\net7.0\LaunchTemplate.AssemblyInfoInputs.cache
+C:\Projects\patroitconsulting\poc\mssp\LaunchTemplate\LaunchTemplate\obj\Debug\net7.0\LaunchTemplate.AssemblyInfo.cs
+C:\Projects\patroitconsulting\poc\mssp\LaunchTemplate\LaunchTemplate\obj\Debug\net7.0\LaunchTemplate.csproj.CoreCompileInputs.cache
+C:\Projects\patroitconsulting\poc\mssp\LaunchTemplate\LaunchTemplate\obj\Debug\net7.0\LaunchTemplate.dll
+C:\Projects\patroitconsulting\poc\mssp\LaunchTemplate\LaunchTemplate\obj\Debug\net7.0\refint\LaunchTemplate.dll
+C:\Projects\patroitconsulting\poc\mssp\LaunchTemplate\LaunchTemplate\obj\Debug\net7.0\LaunchTemplate.pdb
+C:\Projects\patroitconsulting\poc\mssp\LaunchTemplate\LaunchTemplate\obj\Debug\net7.0\LaunchTemplate.genruntimeconfig.cache
+C:\Projects\patroitconsulting\poc\mssp\LaunchTemplate\LaunchTemplate\obj\Debug\net7.0\ref\LaunchTemplate.dll
