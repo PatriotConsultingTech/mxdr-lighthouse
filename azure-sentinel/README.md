@@ -67,7 +67,7 @@ In order to create the Scheduled analytics rules, the deployment template uses a
 
 ### Try it now
 
-[![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fgithub.com%2Famasoodxellagain%2FAzureSentinel%2Fmaster%2FTools%2FSentinel-All-In-One%2FARMTemplates%2Fazuredeploy.json/createUIDefinitionUri/https%3A%2F%2Fgithub.com%2Famasoodxellagain%2FAzureSentinel%2Fmaster%2FTools%2FSentinel-All-In-One%2FARMTemplates%2FcreateUiDefinition.json)
+[![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/main/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fgithub.com%2FPatriotConsultingTech%2Fmxdr-lighthouse%2Fmain%2Fazure-sentinel%2FARMTemplates%2Fazuredeploy.json/createUIDefinitionUri/https%3A%2F%2Fgithub.com%2FPatriotConsultingTech%2Fmxdr-lighthouse%2Fmain%2Fazure-sentinel%2FARMTemplates%2FcreateUiDefinition.json)
 
 
 ## Powershell script Instructions

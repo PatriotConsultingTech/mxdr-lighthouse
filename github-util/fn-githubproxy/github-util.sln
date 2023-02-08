@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaunchTemplate", "LaunchTemplate.csproj", "{55E3B3F9-22CA-4678-A031-EE019DAF4744}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fn-githubproxy", "fn-githubproxy.csproj", "{F088EAF8-00F8-48D7-B790-8F00D09BC06E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{55E3B3F9-22CA-4678-A031-EE019DAF4744}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{55E3B3F9-22CA-4678-A031-EE019DAF4744}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{55E3B3F9-22CA-4678-A031-EE019DAF4744}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{55E3B3F9-22CA-4678-A031-EE019DAF4744}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F088EAF8-00F8-48D7-B790-8F00D09BC06E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F088EAF8-00F8-48D7-B790-8F00D09BC06E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F088EAF8-00F8-48D7-B790-8F00D09BC06E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F088EAF8-00F8-48D7-B790-8F00D09BC06E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {47915E0E-9584-412A-B66C-105CEF465467}
+		SolutionGuid = {306A49C3-C33D-4CC8-803B-DB5330FEFF92}
 	EndGlobalSection
 EndGlobal

@@ -101,7 +101,7 @@
             }
         },
         "_artifactsLocation": {
-            "defaultValue": "https://raw.githubusercontent.com/amasoodxellagain/AzureSentinel/raw/master/Tools/Sentinel-All-In-One/",
+            "defaultValue": "https://raw.githubusercontent.com/PatriotConsultingTech/mxdr-lighthouse/raw/main/azure-sentinel/",
             "type": "String",
             "metadata": {
                 "description": "The location of resources"
