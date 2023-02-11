@@ -1,8 +1,8 @@
 {
   "profiles": {
-    "repoproxy": {
+    "FunctionApp1": {
       "commandName": "Project",
-      "commandLineArgs": "--port 7180",
+      "commandLineArgs": "--port 7161",
       "launchBrowser": false
     }
   }
