@@ -1,6 +1,6 @@
 # ARM template version for MSSPs
 
-This is version of the Azure Sentinel template includes Azure Lighthouse delegation/s as part of the deployment. The template performs the following tasks:
+This is version of the Azure Sentinel template includes Azure Lighthouse delegations as part of the deployment. The template performs the following tasks:
 
 - Creates resource group (if given resource group doesn't exist yet)
 - Creates the **Azure Lighthouse** registration definition
