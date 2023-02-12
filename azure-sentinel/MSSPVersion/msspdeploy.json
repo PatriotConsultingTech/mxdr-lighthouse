@@ -931,7 +931,7 @@
                                 "forceUpdateTag": "1",
                                 "azPowerShellVersion": "3.0",
                                 "arguments": "[concat('-Workspace ', parameters('workspaceName'), ' -ResourceGroup ', resourceGroup().name, ' -Connectors ', parameters('dataConnectorsList'))]",
-                                "primaryScriptUri": "https://raw.githubusercontent.com/PatriotConsultingTech/mxdr-lighthouse/main/azure-sentinel/ARMTemplates/Scripts/EnableRules.ps1",
+                                "primaryScriptUri": "https://raw.githubusercontent.com/PatriotConsultingTech/mxdr-lighthouse/main/azure-sentinel/MSSPVersion/Scripts/EnableRules.ps1",
                                 "supportingScriptUris": [],
                                 "timeout": "PT30M",
                                 "cleanupPreference": "OnSuccess",
