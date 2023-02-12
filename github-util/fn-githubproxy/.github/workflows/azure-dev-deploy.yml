@@ -5,13 +5,6 @@ on:
     branches:
       - develop
 
-# CONFIGURATION
-# For help, go to https://github.com/Azure/Actions
-#
-# 1. Set up the following secrets in your repository:
-#   AZURE_FUNCTIONAPP_PUBLISH_PROFILE
-#
-# 2. Change these variables for your configuration:
 env:
   AZURE_FUNCTIONAPP_NAME: 'fn-githubproxy-dev'   # set this to your function app name on Azure
   AZURE_FUNCTIONAPP_PACKAGE_PATH: './github-util/fn-githubproxy'       # set this to the path to your function app project, defaults to the repository root
