@@ -35,7 +35,7 @@ The template performs the following tasks:
 {% if branch == 'develop' %}
     [![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Ffn-githubproxy.azurewebsites.net%2Fapi%2Fgithubproxy%3Fcode%3DlLWMaz9g8KcxbALqisKniiDTgEJ1V6efZz6DBUxBD9yyAzFuKTvACg%3D%3D%26gitHubUrl%3Dhttps%3A%2F%2Fraw.githubusercontent.com%2FPatriotConsultingTech%2Fmxdr-lighthouse%2Fmain%2Fazure-sentinel%2FMSSPVersion%2Fmsspdeploy.json%3F/createUIDefinitionUri/https%3A%2F%2Ffn-githubproxy.azurewebsites.net%2Fapi%2Fgithubproxy%3Fcode%3DlLWMaz9g8KcxbALqisKniiDTgEJ1V6efZz6DBUxBD9yyAzFuKTvACg%3D%3D%26gitHubUrl%3Dhttps%3A%2F%2Fraw.githubusercontent.com%2FPatriotConsultingTech%2Fmxdr-lighthouse%2Fmain%2Fazure-sentinel%2FMSSPVersion%2FcreateUiDefinition.json)
 
-{% else if branch == 'main' %}
+{% else %}
 
     [![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Ffn-githubproxy.azurewebsites.net%2Fapi%2Fgithubproxy%3Fcode%3DlLWMaz9g8KcxbALqisKniiDTgEJ1V6efZz6DBUxBD9yyAzFuKTvACg%3D%3D%26gitHubUrl%3Dhttps%3A%2F%2Fraw.githubusercontent.com%2FPatriotConsultingTech%2Fmxdr-lighthouse%2Fmain%2Fazure-sentinel%2FMSSPVersion%2Fmsspdeploy.json%3F/createUIDefinitionUri/https%3A%2F%2Ffn-githubproxy.azurewebsites.net%2Fapi%2Fgithubproxy%3Fcode%3DlLWMaz9g8KcxbALqisKniiDTgEJ1V6efZz6DBUxBD9yyAzFuKTvACg%3D%3D%26gitHubUrl%3Dhttps%3A%2F%2Fraw.githubusercontent.com%2FPatriotConsultingTech%2Fmxdr-lighthouse%2Fmain%2Fazure-sentinel%2FMSSPVersion%2FcreateUiDefinition.json)
 
