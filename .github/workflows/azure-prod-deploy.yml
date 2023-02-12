@@ -25,6 +25,8 @@ jobs:
       run: |
         pushd '.\${{ env.README_PATH }}'
         sed -i 's/fn-githubproxy-dev.azurewebsites.net%2Fapi%2Ffn-githubproxy%3Fcode%3D4fYObdW9GVZzT39q6jz1ozi35D1lm3wq1kqtapkPb9t5AzFu_RAf8Q%3D%3D/fn-githubproxy-prod.azurewebsites.net%2Fapi%2Ffn-githubproxy%3Fcode%3DNvzGPLuXcu5NgGFnlTqiBTE1xY7rM-CZo3WgC1ZFeM0zAzFuoQbRKA%3D%3D/g' README.md  
+        sed -i 's/develop/main/g' README.md  
+        
         git config --global user.name 'Automation'
         git config --global user.email 'automation@users.noreply.github.com'
         git commit -am "Automated commit"
