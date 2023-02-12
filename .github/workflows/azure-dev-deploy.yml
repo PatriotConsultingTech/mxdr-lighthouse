@@ -40,9 +40,9 @@ jobs:
         publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
 
     - name: Update README.md
-        shell: pwsh
-        run: |
-          pushd '.\${{ env.README_PATH }}'
-          sed -i 's/fn-githubproxy.azurewebsites.net%2Fapi%2Fgithubproxy%3Fcode%3DlLWMaz9g8KcxbALqisKniiDTgEJ1V6efZz6DBUxBD9yyAzFuKTvACg%3D%3D/fn-githubproxy-dev.azurewebsites.net%2Fapi%2Ffn-githubproxy%3Fcode%3D4fYObdW9GVZzT39q6jz1ozi35D1lm3wq1kqtapkPb9t5AzFu_RAf8Q%3D%3D/g' README.md
+      shell: pwsh
+      run: |
+        pushd '.\${{ env.README_PATH }}'
+        sed -i 's/fn-githubproxy.azurewebsites.net%2Fapi%2Fgithubproxy%3Fcode%3DlLWMaz9g8KcxbALqisKniiDTgEJ1V6efZz6DBUxBD9yyAzFuKTvACg%3D%3D/fn-githubproxy-dev.azurewebsites.net%2Fapi%2Ffn-githubproxy%3Fcode%3D4fYObdW9GVZzT39q6jz1ozi35D1lm3wq1kqtapkPb9t5AzFu_RAf8Q%3D%3D/g' README.md
 
 # For more samples to get started with GitHub Action workflows to deploy to Azure, refer to https://github.com/Azure/actions-workflow-samples
