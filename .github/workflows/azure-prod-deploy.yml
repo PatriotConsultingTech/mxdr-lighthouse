@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - qa
 
 env:
   AZURE_FUNCTIONAPP_NAME: 'fn-githubproxy-prod'  # set this to your function app name on Azure
@@ -17,6 +18,17 @@ jobs:
     steps:
     - name: 'Checkout GitHub Action'
       uses: actions/checkout@v3
+
+    - name: Update README.md
+      shell: pwsh
+      run: |
+        pushd '.\${{ env.README_PATH }}'
+        sed -i 's/fn-githubproxy.azurewebsites.net%2Fapi%2Fgithubproxy%3Fcode%3DlLWMaz9g8KcxbALqisKniiDTgEJ1V6efZz6DBUxBD9yyAzFuKTvACg%3D%3D/fn-githubproxy-dev.azurewebsites.net%2Fapi%2Ffn-githubproxy%3Fcode%3D4fYObdW9GVZzT39q6jz1ozi35D1lm3wq1kqtapkPb9t5AzFu_RAf8Q%3D%3D/g' README.md
+        sed -i 's/fn-githubproxy-dev.azurewebsites.net%2Fapi%2Ffn-githubproxy%3Fcode%3D4fYObdW9GVZzT39q6jz1ozi35D1lm3wq1kqtapkPb9t5AzFu_RAf8Q%3D%3D/fn-githubproxy-prod.azurewebsites.net%2Fapi%2Ffn-githubproxy%3Fcode%3D4fYObdW9GVZzT39q6jz1ozi35D1lm3wq1kqtapkPb9t5AzFu_RAf8Q%3D%3D/g' README.md
+        git config --global user.name 'Automation'
+        git config --global user.email 'automation@users.noreply.github.com'
+        git commit -am "Automated commit"
+        git push
 
     - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
       uses: actions/setup-dotnet@v3
