@@ -32,13 +32,4 @@ The template performs the following tasks:
 - Enables Fusion rule and ML Behavior Analytics rules for RDP or SSH (if selected)
 - Enables Scheduled analytics rules that apply to all the enabled connectors 
 
-{% if branch == 'develop' %}
     [![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Ffn-githubproxy.azurewebsites.net%2Fapi%2Fgithubproxy%3Fcode%3DlLWMaz9g8KcxbALqisKniiDTgEJ1V6efZz6DBUxBD9yyAzFuKTvACg%3D%3D%26gitHubUrl%3Dhttps%3A%2F%2Fraw.githubusercontent.com%2FPatriotConsultingTech%2Fmxdr-lighthouse%2Fmain%2Fazure-sentinel%2FMSSPVersion%2Fmsspdeploy.json%3F/createUIDefinitionUri/https%3A%2F%2Ffn-githubproxy.azurewebsites.net%2Fapi%2Fgithubproxy%3Fcode%3DlLWMaz9g8KcxbALqisKniiDTgEJ1V6efZz6DBUxBD9yyAzFuKTvACg%3D%3D%26gitHubUrl%3Dhttps%3A%2F%2Fraw.githubusercontent.com%2FPatriotConsultingTech%2Fmxdr-lighthouse%2Fmain%2Fazure-sentinel%2FMSSPVersion%2FcreateUiDefinition.json)
-
-{% else %}
-
-    [![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Ffn-githubproxy.azurewebsites.net%2Fapi%2Fgithubproxy%3Fcode%3DlLWMaz9g8KcxbALqisKniiDTgEJ1V6efZz6DBUxBD9yyAzFuKTvACg%3D%3D%26gitHubUrl%3Dhttps%3A%2F%2Fraw.githubusercontent.com%2FPatriotConsultingTech%2Fmxdr-lighthouse%2Fmain%2Fazure-sentinel%2FMSSPVersion%2Fmsspdeploy.json%3F/createUIDefinitionUri/https%3A%2F%2Ffn-githubproxy.azurewebsites.net%2Fapi%2Fgithubproxy%3Fcode%3DlLWMaz9g8KcxbALqisKniiDTgEJ1V6efZz6DBUxBD9yyAzFuKTvACg%3D%3D%26gitHubUrl%3Dhttps%3A%2F%2Fraw.githubusercontent.com%2FPatriotConsultingTech%2Fmxdr-lighthouse%2Fmain%2Fazure-sentinel%2FMSSPVersion%2FcreateUiDefinition.json)
-
-
-{% endif %}
-
