@@ -7,14 +7,14 @@
             "metadata": {
                 "description": "Specify a unique name for your offer"
             },
-            "defaultValue": "Patriot MXDR2"
+            "defaultValue": "Patriot MXDR Solution"
         },
         "mspOfferDescription": {
             "type": "string",
             "metadata": {
                 "description": "Name of the Managed Service Provider offering"
             },
-            "defaultValue": "Patriot MXDR2"
+            "defaultValue": "Patriot MXDR Solution"
         },
         "managedByTenantId": {
             "type": "string",
