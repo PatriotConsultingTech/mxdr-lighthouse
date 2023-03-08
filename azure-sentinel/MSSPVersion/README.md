@@ -25,5 +25,5 @@ This is version of the Azure Sentinel template includes Azure Lighthouse delegat
     - Enables Scheduled analytics rules that apply to all the enabled connectors 
 
 
-    [![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FPatriotConsultingTech%2Fmxdr-lighthouse%2Fdevelop%2Fazure-sentinel%2FMSSPVersion%2Fmsspdeploy.json%3F/createUIDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2FPatriotConsultingTech%2Fmxdr-lighthouse%2Fdevelop%2Fazure-sentinel%2FMSSPVersion%2FcreateUiDefinition.json)
+    [![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FPatriotConsultingTech%2Fmxdr-lighthouse%2Fmain%2Fazure-sentinel%2FMSSPVersion%2Fmsspdeploy.json%3F/createUIDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2FPatriotConsultingTech%2Fmxdr-lighthouse%2Fmain%2Fazure-sentinel%2FMSSPVersion%2FcreateUiDefinition.json)
 
