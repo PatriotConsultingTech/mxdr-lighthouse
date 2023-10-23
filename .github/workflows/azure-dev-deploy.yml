@@ -21,6 +21,9 @@ jobs:
       run: |
         pushd '.\${{ env.README_PATH }}'
         sed -i 's/main/develop/g' README.md
+        sed -i 's/main/develop/g' msdeploy.json
+        sed -i 's/qa/develop/g' README.md
+        sed -i 's/qa/develop/g' msdeploy.json
         git config --global user.name 'Automation'
         git config --global user.email 'automation@users.noreply.github.com'
         git commit -am "Automated commit"
