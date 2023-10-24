@@ -435,7 +435,7 @@
         },
         "dataConnectorsList": {
             "type": "string",
-            "value": "[replace(replace(string(parameters('enableDataConnectorsKind')),'\"',''),'[','')]"
+            "value": "[replace(replace(string(parameters('enableDataConnectors')),'\"',''),'[','')]"
         }
     }
 }
