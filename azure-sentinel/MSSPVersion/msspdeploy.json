@@ -217,7 +217,7 @@
             "metadata": {
                 "description": "The location of resources"
             },
-            "defaultValue": "https://raw.githubusercontent.com/PatriotConsultingTech/mxdr-lighthouse/develop/azure-sentinel/MSSPVersion/"
+            "defaultValue": "https://raw.githubusercontent.com/PatriotConsultingTech/mxdr-lighthouse/qa/azure-sentinel/MSSPVersion/"
         }
     },
     "variables": {

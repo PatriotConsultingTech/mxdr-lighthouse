@@ -29,5 +29,5 @@ This is version of the Azure Sentinel template includes Azure Lighthouse delegat
 - Enables analytics rules (Scheduled and NRT) that use any of the selected Data connectors, with the ability to filter by severity 
 
 
-    [![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FPatriotConsultingTech%2Fmxdr-lighthouse%2Fmain%2Fazure-sentinel%2FMSSPVersion%2Fmsspdeploy.json%3F/createUIDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2FPatriotConsultingTech%2Fmxdr-lighthouse%2Fmain%2Fazure-sentinel%2FMSSPVersion%2FcreateUiDefinition.json)
+    [![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FPatriotConsultingTech%2Fmxdr-lighthouse%2Fqa%2Fazure-sentinel%2FMSSPVersion%2Fmsspdeploy.json%3F/createUIDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2FPatriotConsultingTech%2Fmxdr-lighthouse%2Fqa%2Fazure-sentinel%2FMSSPVersion%2FcreateUiDefinition.json)
 
