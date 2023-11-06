@@ -16,11 +16,14 @@ jobs:
     - name: 'Checkout GitHub Action'
       uses: actions/checkout@v3
 
-    - name: Update README.md
+    - name: Update README.md and msspdeploy.json
       shell: pwsh
       run: |
         pushd '.\${{ env.README_PATH }}'
         sed -i 's/main/develop/g' README.md
+        sed -i 's/main/develop/g' msspdeploy.json
+        sed -i 's/qa/develop/g' README.md
+        sed -i 's/qa/develop/g' msspdeploy.json
         git config --global user.name 'Automation'
         git config --global user.email 'automation@users.noreply.github.com'
         git commit -am "Automated commit"

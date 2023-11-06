@@ -3,7 +3,7 @@ name: Deploy DotNet project to Azure Function App
 on:
   push:
     branches:
-      - main
+      - qa
 
 env:
   README_PATH: 'azure-sentinel\MSSPVersion'
@@ -20,10 +20,10 @@ jobs:
       shell: pwsh
       run: |
         pushd '.\${{ env.README_PATH }}'
-        sed -i 's/develop/main/g' README.md  
-        sed -i 's/develop/main/g' msspdeploy.json
-        sed -i 's/qa/main/g' README.md  
-        sed -i 's/qa/main/g' msspdeploy.json
+        sed -i 's/develop/qa/g' README.md  
+        sed -i 's/develop/qa/g' msspdeploy.json
+        sed -i 's/main/qa/g' README.md  
+        sed -i 's/main/qa/g' msspdeploy.json
         git config --global user.name 'Automation'
         git config --global user.email 'automation@users.noreply.github.com'
         git commit -am "Automated commit"
