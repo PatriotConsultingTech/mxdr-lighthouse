@@ -1,0 +1,37 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+  "parameters": {
+    "workspace": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Authorization/policyAssignments",
+      "apiVersion": "2020-03-01",
+      "name": "Configure-Activity-Logs-To-Log-Analytics",
+      "location": "[parameters('location')]",
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "properties": {
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/2465583e-4e78-4c15-b6be-a36cbc7c8b0f",
+        "parameters": {
+          "logAnalytics": {
+            "value": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspace'))]"
+          },
+          "effect": {
+            "value": "DeployIfNotExists"
+          },
+          "logsEnabled": {
+            "value": "True"
+          }
+        }
+      }
+    }
+  ]
+}
