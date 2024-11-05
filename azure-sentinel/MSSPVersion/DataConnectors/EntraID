@@ -3,21 +3,21 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "rgName": {
-            "defaultValue": "dustytest8-sentinel-rg",
+            "defaultValue": "<customer-name>-sentinel-rg",
             "type": "String",
             "metadata": {
                 "description": "Name of the resource group to create. If customer has their own naming convention or an existing resource group that contains the Sentinel Workspace enter that here."
             }
         },
         "workspaceName": {
-            "defaultValue": "dustytest8-sentinel-law",
+            "defaultValue": "<customer-name>-sentinel-law",
             "type": "String",
             "metadata": {
                 "description": "Name for the Log Analytics workspace"
             }
         },
         "subscriptionId": {
-            "defaultValue": "[subscription().subscriptionId]",
+            "defaultValue": "1234",
             "type": "String",
             "metadata": {
                 "description": "Subscription Id to monitor"
