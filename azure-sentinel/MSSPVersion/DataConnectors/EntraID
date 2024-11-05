@@ -28,7 +28,7 @@
         {
             "type": "microsoft.aadiam/diagnosticSettings",
             "apiVersion": "2017-04-01",
-            "name": "setByARM",
+            "name": "[concat('AzureSentinel_', parameters('workspaceName'))]",
             "properties": {
                 "workspaceId": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', parameters('rgName'), '/providers/Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]",
                 "logAnalyticsDestinationType": null,
