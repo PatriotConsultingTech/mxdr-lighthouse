@@ -1,0 +1,383 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "PlaybookName": {
+      "type": "String",
+      "defaultValue": "Isolate-MDEMachine-LogicApp"
+    },
+    "AzureSentinelConnectionName": {
+      "type": "String",
+      "defaultValue": "azuresentinel-Isolate-MDEMachine"
+    },
+    "AzureSentinel1ConnectionName": {
+      "type": "String",
+      "defaultValue": "azuresentinel-1"
+    },
+    "WdatpConnectionName": {
+      "type": "String",
+      "defaultValue": "wdatp-1"
+    },
+    "TeamsConnectionName": {
+      "type": "String",
+      "defaultValue": "teams"
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "type": "Microsoft.Web/connections",
+      "apiVersion": "2016-06-01",
+      "name": "[parameters('AzureSentinelConnectionName')]",
+      "location": "[resourceGroup().location]",
+      "kind": "V1",
+      "properties": {
+        "displayName": "[parameters('AzureSentinelConnectionName')]",
+        "customParameterValues": {},
+        "parameterValueType": "Alternative",
+        "api": {
+          "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/azuresentinel')]"
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Web/connections",
+      "apiVersion": "2016-06-01",
+      "name": "[parameters('AzureSentinel1ConnectionName')]",
+      "location": "[resourceGroup().location]",
+      "kind": "V1",
+      "properties": {
+        "displayName": "[parameters('AzureSentinel1ConnectionName')]",
+        "api": {
+          "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/azuresentinel')]"
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Web/connections",
+      "apiVersion": "2016-06-01",
+      "name": "[parameters('WdatpConnectionName')]",
+      "location": "[resourceGroup().location]",
+      "kind": "V1",
+      "properties": {
+        "displayName": "[parameters('WdatpConnectionName')]",
+        "api": {
+          "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/wdatp')]"
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Web/connections",
+      "apiVersion": "2016-06-01",
+      "name": "[parameters('TeamsConnectionName')]",
+      "location": "[resourceGroup().location]",
+      "kind": "V1",
+      "properties": {
+        "displayName": "[parameters('TeamsConnectionName')]",
+        "api": {
+          "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/teams')]"
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Logic/workflows",
+      "apiVersion": "2017-07-01",
+      "name": "[parameters('PlaybookName')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/connections', parameters('AzureSentinelConnectionName'))]",
+        "[resourceId('Microsoft.Web/connections', parameters('AzureSentinel1ConnectionName'))]",
+        "[resourceId('Microsoft.Web/connections', parameters('WdatpConnectionName'))]",
+        "[resourceId('Microsoft.Web/connections', parameters('TeamsConnectionName'))]"
+      ],
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "properties": {
+        "state": "Enabled",
+        "definition": {
+          "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+          "contentVersion": "1.0.0.0",
+          "parameters": {
+            "$connections": {
+              "type": "Object",
+              "defaultValue": {}
+            }
+          },
+          "triggers": {
+            "Microsoft_Sentinel_incident": {
+              "type": "ApiConnectionWebhook",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                  }
+                },
+                "body": {
+                  "callback_url": "@{listCallbackUrl()}"
+                },
+                "path": "/incident-creation"
+              }
+            }
+          },
+          "actions": {
+            "Entities_-_Get_Hosts": {
+              "type": "ApiConnection",
+              "runAfter": {},
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                  }
+                },
+                "method": "post",
+                "body": "@triggerBody()?['object']?['properties']?['relatedEntities']",
+                "path": "/entities/host"
+              }
+            },
+            "For_each": {
+              "type": "Foreach",
+              "runAfter": {
+                "Entities_-_Get_Hosts": [
+                  "Succeeded"
+                ]
+              },
+              "foreach": "@body('Entities_-_Get_Hosts')?['Hosts']",
+              "actions": {
+                "Advanced_Hunting": {
+                  "type": "ApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connection": {
+                        "name": "@parameters('$connections')['wdatp-1']['connectionId']"
+                      }
+                    },
+                    "method": "post",
+                    "body": {
+                      "Query": "DeviceInfo\n| where isnotempty(AzureResourceId) or isnotempty(DeviceName)\n| where AzureResourceId endswith \"/@{item()?['HostName']}\" or DeviceName startswith \"@{item()?['HostName']}.\"\n| distinct DeviceId"
+                    },
+                    "path": "/api/advancedqueries/run"
+                  }
+                },
+                "Condition_-_Check_For_Null_Result": {
+                  "type": "If",
+                  "runAfter": {
+                    "Advanced_Hunting": [
+                      "Succeeded"
+                    ]
+                  },
+                  "expression": {
+                    "or": [
+                      {
+                        "not": {
+                          "equals": [
+                            "@length(body('Advanced_Hunting')?['Results'])",
+                            0
+                          ]
+                        }
+                      },
+                      {
+                        "less": [
+                          "@length(body('Advanced_Hunting')?['Results'])",
+                          2
+                        ]
+                      }
+                    ]
+                  },
+                  "actions": {
+                    "For_each_-_Advanced_Hunting_Result": {
+                      "type": "Foreach",
+                      "foreach": "@body('Advanced_Hunting')?['Results']",
+                      "actions": {
+                        "Compose_-_Machine_ID": {
+                          "type": "Compose",
+                          "inputs": "@items('For_each_-_Advanced_Hunting_Result')?['DeviceId']"
+                        },
+                        "Actions_-_Isolate_machine": {
+                          "type": "ApiConnection",
+                          "runAfter": {
+                            "Compose_-_Machine_ID": [
+                              "Succeeded"
+                            ]
+                          },
+                          "inputs": {
+                            "host": {
+                              "connection": {
+                                "name": "@parameters('$connections')['wdatp-1']['connectionId']"
+                              }
+                            },
+                            "method": "post",
+                            "body": {
+                              "Comment": "Isolated from playbook for Microsoft Sentinel Incident:  @{triggerBody()?['object']?['properties']?['incidentNumber']} - @{triggerBody()?['object']?['properties']?['title']}",
+                              "IsolationType": "Full"
+                            },
+                            "path": "/api/machines/@{encodeURIComponent(outputs('Compose_-_Machine_ID'))}/isolate"
+                          }
+                        },
+                        "Add_comment_to_incident_(V3)_-_Successful_Isolation": {
+                          "type": "ApiConnection",
+                          "runAfter": {
+                            "Actions_-_Isolate_machine": [
+                              "Succeeded"
+                            ]
+                          },
+                          "inputs": {
+                            "host": {
+                              "connection": {
+                                "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                              }
+                            },
+                            "method": "post",
+                            "body": {
+                              "incidentArmId": "@triggerBody()?['object']?['id']",
+                              "message": "<p>@{items('For_each')?['HostName']} was isolated in MDE and the status was @{body('Actions_-_Isolate_machine')?['status']}</p>"
+                            },
+                            "path": "/Incidents/Comment"
+                          }
+                        },
+                        "Add_comment_to_incident_(V3)_-_Found_ID_Not_Supported": {
+                          "type": "ApiConnection",
+                          "runAfter": {
+                            "Actions_-_Isolate_machine": [
+                              "Failed"
+                            ]
+                          },
+                          "inputs": {
+                            "host": {
+                              "connection": {
+                                "name": "@parameters('$connections')['azuresentinel-1']['connectionId']"
+                              }
+                            },
+                            "method": "post",
+                            "body": {
+                              "incidentArmId": "@triggerBody()?['object']?['id']",
+                              "message": "<p class=\"editor-paragraph\">@{items('For_each')?['HostName']} was found in MDE but isolation is not supported. It was not isolated.</p>"
+                            },
+                            "path": "/Incidents/Comment"
+                          }
+                        },
+                        "Post_message_in_a_chat_or_channel_-_Found_Device_But_Not_Able_To_Isolate": {
+                          "type": "ApiConnection",
+                          "runAfter": {
+                            "Add_comment_to_incident_(V3)_-_Found_ID_Not_Supported": [
+                              "Succeeded"
+                            ]
+                          },
+                          "inputs": {
+                            "host": {
+                              "connection": {
+                                "name": "@parameters('$connections')['teams']['connectionId']"
+                              }
+                            },
+                            "method": "post",
+                            "body": {
+                              "recipient": {
+                                "groupId": "2da9c8ab-27a8-4fc8-9fb8-4348b7a33fe8",
+                                "channelId": "19:tvBP_CIMV_xEeDQHrvhtjeFyWt58kPHcSxKoltmsgsc1@thread.tacv2"
+                              },
+                              "messageBody": "<p class=\"editor-paragraph\"><u><b><strong class=\"editor-text-bold editor-text-underline\">Machine Was Found But Isolation Failed! Please manually isolate machine if possible!</strong></b></u></p><br><p class=\"editor-paragraph\">HostName: @{items('For_each')?['HostName']}</p><br><p class=\"editor-paragraph\">[Sentinel Incident ID: @{triggerBody()?['object']?['properties']?['incidentNumber']}] - [Incident title: @{triggerBody()?['object']?['properties']?['title']}] - [Resource Group Name: @{triggerBody()?['workspaceInfo']?['ResourceGroupName']}] - [Incident Workspace ID: @{triggerBody()?['workspaceId']}] - [Incident Workspace Name: @{triggerBody()?['workspaceInfo']?['WorkspaceName']}]</p><br>"
+                            },
+                            "path": "/beta/teams/conversation/message/poster/Flow bot/location/@{encodeURIComponent('Channel')}"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "else": {
+                    "actions": {
+                      "Post_message_in_a_chat_or_channel_-_Failed_Isolation": {
+                        "type": "ApiConnection",
+                        "inputs": {
+                          "host": {
+                            "connection": {
+                              "name": "@parameters('$connections')['teams']['connectionId']"
+                            }
+                          },
+                          "method": "post",
+                          "body": {
+                            "recipient": {
+                              "groupId": "2da9c8ab-27a8-4fc8-9fb8-4348b7a33fe8",
+                              "channelId": "19:tvBP_CIMV_xEeDQHrvhtjeFyWt58kPHcSxKoltmsgsc1@thread.tacv2"
+                            },
+                            "messageBody": "<p class=\"editor-paragraph\"><u><b><strong class=\"editor-text-bold editor-text-underline\">Machine Not Found! Machine Isolation Was Not Successful! Please manually isolate machine if possible!</strong></b></u></p><br><p class=\"editor-paragraph\">HostName: @{items('For_each')?['HostName']}</p><br><p class=\"editor-paragraph\">[Sentinel Incident ID: @{triggerBody()?['object']?['properties']?['incidentNumber']}] - [Incident title: @{triggerBody()?['object']?['properties']?['title']}] - [Resource Group Name: @{triggerBody()?['workspaceInfo']?['ResourceGroupName']}] - [Incident Workspace ID: @{triggerBody()?['workspaceId']}] - [Incident Workspace Name: @{triggerBody()?['workspaceInfo']?['WorkspaceName']}]</p><br>"
+                          },
+                          "path": "/beta/teams/conversation/message/poster/Flow bot/location/@{encodeURIComponent('Channel')}"
+                        }
+                      },
+                      "Add_comment_to_incident_(V3)_-_Device_Not_Found": {
+                        "type": "ApiConnection",
+                        "runAfter": {
+                          "Post_message_in_a_chat_or_channel_-_Failed_Isolation": [
+                            "Succeeded"
+                          ]
+                        },
+                        "inputs": {
+                          "host": {
+                            "connection": {
+                              "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                            }
+                          },
+                          "method": "post",
+                          "body": {
+                            "incidentArmId": "@triggerBody()?['object']?['id']",
+                            "message": "<p>@{items('For_each')?['HostName']} does not have MDEDeviceID in the Entities list. It was not isolated.</p>"
+                          },
+                          "path": "/Incidents/Comment"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "Terminate": {
+              "type": "Terminate",
+              "runAfter": {
+                "For_each": [
+                  "Succeeded",
+                  "Failed"
+                ]
+              },
+              "inputs": {
+                "runStatus": "Succeeded"
+              }
+            }
+          },
+          "outputs": {}
+        },
+        "parameters": {
+          "$connections": {
+            "value": {
+              "azuresentinel": {
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('AzureSentinelConnectionName'))]",
+                "connectionName": "[parameters('AzureSentinelConnectionName')]",
+                "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/azuresentinel')]",
+                "connectionProperties": {
+                  "authentication": {
+                    "type": "ManagedServiceIdentity"
+                  }
+                }
+              },
+              "wdatp-1": {
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('WdatpConnectionName'))]",
+                "connectionName": "[parameters('WdatpConnectionName')]",
+                "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/wdatp')]"
+              },
+              "azuresentinel-1": {
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('AzureSentinel1ConnectionName'))]",
+                "connectionName": "[parameters('AzureSentinel1ConnectionName')]",
+                "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/azuresentinel')]"
+              },
+              "teams": {
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('TeamsConnectionName'))]",
+                "connectionName": "[parameters('TeamsConnectionName')]",
+                "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/teams')]"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "outputs": {}
+}
