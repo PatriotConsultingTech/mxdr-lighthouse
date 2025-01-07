@@ -1,0 +1,98 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workspace": {
+            "type": "String"
+        }
+    },
+    "resources": [
+        {
+            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/AutomationRules/8d3982de-e058-4af2-8373-37d437770f9a')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/8d3982de-e058-4af2-8373-37d437770f9a')]",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/AutomationRules",
+            "apiVersion": "2024-04-01-preview",
+            "properties": {
+                "displayName": "MXDR365 - FreshService - Incident Updates",
+                "order": 1,
+                "triggeringLogic": {
+                    "isEnabled": true,
+                    "triggersOn": "Incidents",
+                    "triggersWhen": "Updated",
+                    "conditions": [
+                        {
+                            "conditionType": "Boolean",
+                            "conditionProperties": {
+                                "operator": "Or",
+                                "innerConditions": [
+                                    {
+                                        "conditionType": "PropertyArrayChanged",
+                                        "conditionProperties": {
+                                            "arrayType": "Comments",
+                                            "changeType": "Added"
+                                        }
+                                    },
+                                    {
+                                        "conditionType": "PropertyChanged",
+                                        "conditionProperties": {
+                                            "propertyName": "IncidentOwner",
+                                            "operator": null,
+                                            "changeType": null
+                                        }
+                                    },
+                                    {
+                                        "conditionType": "PropertyArrayChanged",
+                                        "conditionProperties": {
+                                            "arrayType": "Alerts",
+                                            "changeType": "Added"
+                                        }
+                                    },
+                                    {
+                                        "conditionType": "PropertyArrayChanged",
+                                        "conditionProperties": {
+                                            "arrayType": "Labels",
+                                            "changeType": "Added"
+                                        }
+                                    },
+                                    {
+                                        "conditionType": "PropertyChanged",
+                                        "conditionProperties": {
+                                            "propertyName": "IncidentSeverity",
+                                            "operator": null,
+                                            "changeType": null
+                                        }
+                                    },
+                                    {
+                                        "conditionType": "PropertyArrayChanged",
+                                        "conditionProperties": {
+                                            "arrayType": "Tactics",
+                                            "changeType": "Added"
+                                        }
+                                    },
+                                    {
+                                        "conditionType": "PropertyChanged",
+                                        "conditionProperties": {
+                                            "propertyName": "IncidentStatus",
+                                            "operator": null,
+                                            "changeType": null
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                "actions": [
+                    {
+                        "order": 1,
+                        "actionType": "RunPlaybook",
+                        "actionConfiguration": {
+                            "logicAppResourceId": "/subscriptions/32e993b8-ebcd-4bca-98e7-23b6d3639b38/resourceGroups/Dusty/providers/Microsoft.Logic/workflows/Create-FreshService-Ticket",
+                            "tenantId": "73bf1773-9ee6-488f-b898-33c4fbac0041"
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}
