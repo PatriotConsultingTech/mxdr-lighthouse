@@ -1,23 +1,60 @@
+# Function to prompt for input with validation
+function Get-ValidatedInput {
+    param (
+        [string]$prompt,
+        [string]$validationPattern,
+        [string]$errorMessage
+    )
+    
+    do {
+        $input = Read-Host -Prompt $prompt
+        if ($input -match $validationPattern) {
+            return $input
+        }
+        Write-Host $errorMessage -ForegroundColor Red
+    } while ($true)
+}
 
-$permissions = @(
-"Policy.Read.All",
-"Policy.ReadWrite.ConditionalAccess",
-"EntitlementManagement.ReadWrite.All",
-"Policy.ReadWrite.CrossTenantAccess",
-    "Directory.ReadWrite.All",
-    "Group.ReadWrite.All",
-"Application.Read.All",
-"User.ReadWrite.All",
-"Organization.Read.All",
-    "PrivilegedEligibilitySchedule.Read.AzureADGroup",
-    "PrivilegedEligibilitySchedule.ReadWrite.AzureADGroup",
-    "PrivilegedAccess.Read.AzureADGroup",
-    "PrivilegedAccess.ReadWrite.AzureADGroup",
-    "RoleManagement.ReadWrite.Directory",
-"Policy.ReadWrite.CrossTenantAccess"
-)
+# Clear the screen and show welcome message
+Clear-Host
+Write-Host "=== Patriot MXDR Access Package Setup ===" -ForegroundColor Cyan
+Write-Host "This script will set up the necessary access package configurations." -ForegroundColor Cyan
+Write-Host ""
 
-Connect-MgGraph -Scopes $permissions -NoWelcome -TenantId $tenantID
+# Get Tenant ID with validation
+$tenantPattern = '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+$tenantID = Get-ValidatedInput `
+    -prompt "Please enter your Tenant ID" `
+    -validationPattern $tenantPattern `
+    -errorMessage "Invalid Tenant ID format. Please enter a valid GUID."
+
+Write-Host "`nConfirm the following information:" -ForegroundColor Yellow
+Write-Host "Tenant ID: $tenantID"
+$confirm = Read-Host "`nProceed with these settings? (Y/N)"
+
+if ($confirm -eq 'Y' -or $confirm -eq 'y') {
+    # Your existing permissions array
+    $permissions = @(
+        "Policy.Read.All",
+        "Policy.ReadWrite.ConditionalAccess",
+        "EntitlementManagement.ReadWrite.All",
+        "Policy.ReadWrite.CrossTenantAccess",
+        "Directory.ReadWrite.All",
+        "Group.ReadWrite.All",
+        "Application.Read.All",
+        "User.ReadWrite.All",
+        "Organization.Read.All",
+        "PrivilegedEligibilitySchedule.Read.AzureADGroup",
+        "PrivilegedEligibilitySchedule.ReadWrite.AzureADGroup",
+        "PrivilegedAccess.Read.AzureADGroup",
+        "PrivilegedAccess.ReadWrite.AzureADGroup",
+        "RoleManagement.ReadWrite.Directory",
+        "Policy.ReadWrite.CrossTenantAccess"
+    )
+
+    Write-Host "`nConnecting to Microsoft Graph..." -ForegroundColor Green
+    Connect-MgGraph -Scopes $permissions -NoWelcome -TenantId $tenantID
+    }
 
 Write-Host "Creating group for Patriot MXDR Analysts." -ForegroundColor Green
 #Creating group for Patriot MXDR Analysts
