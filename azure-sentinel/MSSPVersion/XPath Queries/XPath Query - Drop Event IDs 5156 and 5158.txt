@@ -1,0 +1,5 @@
+1. Open Microsoft Sentinel
+2. Open the Windows Security Events via AMA Data Connector
+3. Open/Create the data collection rule
+4. On the collect page enter the below information after checking the custom radio button - Security!*[System[(EventID != 5156 and EventID != 5158)]]
+5. Save the Data Collection Rule
