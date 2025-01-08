@@ -51,32 +51,56 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2022-09-01",
       "name": "roleAssignments",
+      "location": "[parameters('location')]",
       "dependsOn": [
         "[variables('policyAssignmentName')]"
       ],
       "properties": {
         "mode": "Incremental",
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "parameters": {
+          "policyAssignmentName": {
+            "value": "[variables('policyAssignmentName')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        },
         "template": {
           "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
           "contentVersion": "1.0.0.0",
+          "parameters": {
+            "policyAssignmentName": {
+              "type": "string"
+            },
+            "location": {
+              "type": "string"
+            }
+          },
+          "variables": {
+            "monitoringContributorRole": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', '749f88d5-cbae-40b8-bcfc-e573ddc772fa')]",
+            "logAnalyticsContributorRole": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', '92aaf0da-9dab-42b6-94a3-d43ce8d16293')]"
+          },
           "resources": [
             {
               "type": "Microsoft.Authorization/roleAssignments",
               "apiVersion": "2022-04-01",
-              "name": "[guid(subscription().id, variables('policyAssignmentName'), variables('monitoringContributorRole'))]",
+              "name": "[guid(subscription().id, parameters('policyAssignmentName'), variables('monitoringContributorRole'))]",
               "properties": {
                 "roleDefinitionId": "[variables('monitoringContributorRole')]",
-                "principalId": "[reference(resourceId('Microsoft.Authorization/policyAssignments', variables('policyAssignmentName')), '2022-06-01', 'Full').identity.principalId]",
+                "principalId": "[reference(resourceId('Microsoft.Authorization/policyAssignments', parameters('policyAssignmentName')), '2022-06-01', 'Full').identity.principalId]",
                 "principalType": "ServicePrincipal"
               }
             },
             {
               "type": "Microsoft.Authorization/roleAssignments",
               "apiVersion": "2022-04-01",
-              "name": "[guid(subscription().id, variables('policyAssignmentName'), variables('logAnalyticsContributorRole'))]",
+              "name": "[guid(subscription().id, parameters('policyAssignmentName'), variables('logAnalyticsContributorRole'))]",
               "properties": {
                 "roleDefinitionId": "[variables('logAnalyticsContributorRole')]",
-                "principalId": "[reference(resourceId('Microsoft.Authorization/policyAssignments', variables('policyAssignmentName')), '2022-06-01', 'Full').identity.principalId]",
+                "principalId": "[reference(resourceId('Microsoft.Authorization/policyAssignments', parameters('policyAssignmentName')), '2022-06-01', 'Full').identity.principalId]",
                 "principalType": "ServicePrincipal"
               }
             }
