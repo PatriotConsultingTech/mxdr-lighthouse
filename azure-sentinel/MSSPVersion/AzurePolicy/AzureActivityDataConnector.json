@@ -1,19 +1,30 @@
 {
   "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
+  "contentVersion": "1.0.0.0",
   "parameters": {
     "workspace": {
-      "type": "string"
+      "type": "string",
+      "metadata": {
+        "description": "Name of the Log Analytics workspace"
+      }
     },
     "location": {
-      "type": "string"
+      "type": "string",
+      "metadata": {
+        "description": "Location for the policy assignment and managed identity"
+      }
     }
+  },
+  "variables": {
+    "policyAssignmentName": "Send Azure Actitiy Logs To Sentinel Workspace",
+    "monitoringContributorRole": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', '749f88d5-cbae-40b8-bcfc-e573ddc772fa')]",
+    "logAnalyticsContributorRole": "[concat('/providers/Microsoft.Authorization/roleDefinitions/', '92aaf0da-9dab-42b6-94a3-d43ce8d16293')]"
   },
   "resources": [
     {
       "type": "Microsoft.Authorization/policyAssignments",
-      "apiVersion": "2020-03-01",
-      "name": "Send Azure Actitiy Logs To Sentinel Workspace",
+      "apiVersion": "2022-06-01",
+      "name": "[variables('policyAssignmentName')]",
       "location": "[parameters('location')]",
       "identity": {
         "type": "SystemAssigned"
@@ -30,7 +41,36 @@
           "logsEnabled": {
             "value": "True"
           }
-        }
+        },
+        "displayName": "[variables('policyAssignmentName')]",
+        "description": "Policy Assignment for sending Azure Activity Logs to Sentinel Workspace",
+        "enforcementMode": "Default"
+      }
+    },
+    {
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2022-04-01",
+      "name": "[guid(subscription().id, variables('policyAssignmentName'), variables('monitoringContributorRole'))]",
+      "dependsOn": [
+        "[variables('policyAssignmentName')]"
+      ],
+      "properties": {
+        "roleDefinitionId": "[variables('monitoringContributorRole')]",
+        "principalId": "[reference(variables('policyAssignmentName'), '2022-06-01', 'Full').identity.principalId]",
+        "principalType": "ServicePrincipal"
+      }
+    },
+    {
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2022-04-01",
+      "name": "[guid(subscription().id, variables('policyAssignmentName'), variables('logAnalyticsContributorRole'))]",
+      "dependsOn": [
+        "[variables('policyAssignmentName')]"
+      ],
+      "properties": {
+        "roleDefinitionId": "[variables('logAnalyticsContributorRole')]",
+        "principalId": "[reference(variables('policyAssignmentName'), '2022-06-01', 'Full').identity.principalId]",
+        "principalType": "ServicePrincipal"
       }
     }
   ]
