@@ -48,9 +48,10 @@
       }
     },
     {
+      "condition": "[not(empty(reference(variables('policyAssignmentName'), '2022-06-01', 'Full').identity.principalId))]",
       "type": "Microsoft.Authorization/roleAssignments",
       "apiVersion": "2022-04-01",
-      "name": "[guid(subscription().id, variables('policyAssignmentName'), variables('monitoringContributorRole'))]",
+      "name": "[guid(resourceId('Microsoft.Authorization/policyAssignments', variables('policyAssignmentName')), variables('monitoringContributorRole'))]",
       "dependsOn": [
         "[variables('policyAssignmentName')]"
       ],
@@ -61,9 +62,10 @@
       }
     },
     {
+      "condition": "[not(empty(reference(variables('policyAssignmentName'), '2022-06-01', 'Full').identity.principalId))]",
       "type": "Microsoft.Authorization/roleAssignments",
       "apiVersion": "2022-04-01",
-      "name": "[guid(subscription().id, variables('policyAssignmentName'), variables('logAnalyticsContributorRole'))]",
+      "name": "[guid(resourceId('Microsoft.Authorization/policyAssignments', variables('policyAssignmentName')), variables('logAnalyticsContributorRole'))]",
       "dependsOn": [
         "[variables('policyAssignmentName')]"
       ],
