@@ -1,0 +1,15 @@
+Traffic: 
+
+CEF:0|Palo Alto Networks|PAN-OS|$sender_sw_version|$subtype|$type|1|rt=$cef-formatted-receive_time src=$src dst=$dst sourceTranslatedAddress=$natsrc destinationTranslatedAddress=$natdst cs1Label=Rule cs1=$rule suser=$srcuser duser=$dstuser app=$app cs4Label=Source Zone cs4=$from cs5Label=Destination Zone cs5=$to cn1Label=SessionID cn1=$sessionid spt=$sport dpt=$dport sourceTranslatedPort=$natsport destinationTranslatedPort=$natdport proto=$proto act=$action flexNumber1Label=Total bytes flexNumber1=$bytes in=$bytes_sent out=$bytes_received start=$cef-formatted-time_generated cs2Label=URL Category cs2=$category dvchost=$device_name cat=$action_source PanOSActionFlags=$actionflags PanOSThreatCategory=$thr_category
+
+Threat:
+
+CEF:0|Palo Alto Networks|PAN-OS|$sender_sw_version|$threatid|$type|$number-of-severity|rt=$cef-formatted-receive_time src=$src dst=$dst sourceTranslatedAddress=$natsrc destinationTranslatedAddress=$natdst cs1Label=Rule cs1=$rule suser=$srcuser duser=$dstuser app=$app cs4Label=Source Zone cs4=$from cs5Label=Destination Zone cs5=$to spt=$sport dpt=$dport proto=$proto act=$action request=$misc cs2Label=URL Category cs2=$category flexString2Label=Direction flexString2=$direction PanOSActionFlags=$actionflags cat=$subtype deviceExternalId=$serial dvchost=$device_name PanOSThreatCategory=$thr_category PanOSRuleUUID=$rule_uuid
+
+URL:
+
+CEF:0|Palo Alto Networks|PAN-OS|$sender_sw_version|$subtype|$type|$number-of-severity|rt=$cef-formatted-receive_time src=$src dst=$dst cs1Label=Rule cs1=$rule suser=$srcuser duser=$dstuser app=$app spt=$sport dpt=$dport proto=$proto act=$action request=$misc cs2Label=URL Category cs2=$category flexString2Label=Direction flexString2=$direction cat=$threatid dvchost=$device_name requestContext=$contenttype requestMethod=$http_method requestClientApplication=$user_agent PanOSXForwarderfor=$xff PanOSReferer=$referer PanOSURLCatList=$url_category_list
+
+Wildfire:
+
+CEF:0|Palo Alto Networks|PAN-OS|$sender_sw_version|$subtype|$type|$number-of-severity|rt=$cef-formatted-receive_time src=$src dst=$dst cs1Label=Rule cs1=$rule suser=$srcuser duser=$dstuser app=$app spt=$sport dpt=$dport proto=$proto act=$action request=$misc cs2Label=URL Category cs2=$category flexString2Label=Direction flexString2=$direction cat=$threatid fileHash=$filedigest fileType=$filetype dvchost=$device_name PanOSThreatCategory=$thr_category
