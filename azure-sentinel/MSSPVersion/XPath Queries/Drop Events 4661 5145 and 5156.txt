@@ -1,0 +1,1 @@
+Security!*[System[(EventID != 4661 and EventID != 5145 and EventID != 5156)]]
