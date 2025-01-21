@@ -1,0 +1,27 @@
+1. Alter line 13 for your alert threshold. In my case it is | where DataSizeGB > 700 which means when Event ID 33205 is above 700GB per 30 days it will generate a result.
+2. Run this query in the Log Analytics Workspace where you want to set the Alert.
+3. Click New Alert Rule > Create Azure Monitor Alert.
+4. Setup appropriate time range to run, in my case 1 day, and the threshold should be greater than 0. Configure any additional settings that may be needed. 
+5. Create or choose the Action Group that you would like to alert to go to. Usually this is SMS or Email. 
+6. Save the Alert.
+7. To view the alert search for Alerts in Azure Monitor. 
+
+Query:
+
+let StartDate = startofday(ago(30d));
+let EndDate = endofday(now());
+SecurityEvent
+| where TimeGenerated >= StartDate and TimeGenerated <= EndDate
+| where EventID == 33205
+| summarize 
+    TotalEvents = count(),
+    DataSizeGB = round(sum(_BilledSize)/(1024*1024*1024), 2)
+| extend 
+    PeriodStart = StartDate,
+    PeriodEnd = EndDate
+| where DataSizeGB > 700
+| project 
+    PeriodStart,
+    PeriodEnd,
+    TotalEvents,
+    DataSizeGB
