@@ -1,5 +1,6 @@
 <#
 .SYNOPSIS
+    MUST DO!!!! - MAKE SURE THE WORKSPACE YOU ARE RUNNING THIS ON HAS THE MOST UP TO DATE HUNING QUERIES AND ANALYTIC RULE FOR PROPER MATCHING
     This Version of the script has been built around Azure CloudShell. 
     Dry run: Compares only MXDR365 Sentinel Analytics Rules & Hunting Queries via REST API and exports results to CSV.
 
