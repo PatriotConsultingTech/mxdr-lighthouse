@@ -1,0 +1,6 @@
+//Run this query in the environment you want to get an active user count for
+IdentityInfo
+| where TimeGenerated > ago(7d)  // Adjust time range
+| where IsAccountEnabled == true
+| distinct AccountDisplayName
+| summarize count()
