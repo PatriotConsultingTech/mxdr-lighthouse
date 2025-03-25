@@ -1,3 +1,3 @@
 1. Apply this at the Log Analytics Workspace > Tables > AADNonInteractiveSignInLogs
 
-source | project-away ConditionalAccessPolicies - aadnon
+source | project-away ConditionalAccessPolicies
