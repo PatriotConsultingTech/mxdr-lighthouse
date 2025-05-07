@@ -93,7 +93,7 @@
                                     {
                                         "name": "AccountDetails",
                                         "type": "String",
-                                        "value": "@{concat(triggerBody()?['Entity']?['properties']?['Name'], '@', triggerBody()?['Entity']?['properties']?['UPNSuffix'])}"
+                                        "value": "@{concat(triggerBody()?['Entity']?['properties']?['additionalData']?['AccountName'], '@', triggerBody()?['Entity']?['properties']?['UPNSuffix'])}"
                                     }
                                 ]
                             }
