@@ -78,7 +78,7 @@
                             "type": "SetVariable",
                             "inputs": {
                                 "name": "Password",
-                                "value": "@{substring(guid(), 0, 10)}"
+                                "value": "@concat('A#',substring(replace(guid(), '-', ''), 0, 24))"
                             }
                         },
                         "Initialize_variable_Account": {
